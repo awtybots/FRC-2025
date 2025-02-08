@@ -80,9 +80,9 @@ public final class Constants {
   public static final class ElevatorSetpoints{
     public static final int FeederStation = 0;
     public static final int L1 = 15;
-    public static final int AlgaeLow = 18;
+    public static final int AlgaeLow = 20;
     public static final int L2 = 40;
-    public static final int AlgaeHigh = 43;
+    public static final int AlgaeHigh = 55;
     public static final int L3 = 72;
     public static final int L4 = 72;
   }
