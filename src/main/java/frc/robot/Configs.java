@@ -71,6 +71,7 @@ public final class Configs {
 
                 r_armMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
                 l_armMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+                r_armMotorConfig.inverted(true);
 
 
                 r_armMotorConfig.closedLoop.
@@ -94,6 +95,7 @@ public final class Configs {
                 
                 l_elevatorMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);
                 r_elevatorMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);  
+                r_elevatorMotorConfig.inverted(true);
 
                 l_elevatorMotorConfig
                 .closedLoop

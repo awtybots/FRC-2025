@@ -113,8 +113,8 @@ public final class Constants {
   }
 
   public static final class IntakeSetpoints{
-    public static final double kForward = -1;
-    public static final double kReverse = 1;
+    public static final double kForward = -.6;
+    public static final double kReverse = .6;
     public static final double kHold = .25;
   }
 

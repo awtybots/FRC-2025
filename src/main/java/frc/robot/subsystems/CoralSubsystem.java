@@ -34,13 +34,16 @@ public class CoralSubsystem extends SubsystemBase {
     //arm setup
     private SparkMax l_armMotor = new SparkMax(ArmConstants.ArmLeftCanID, MotorType.kBrushless);
     private SparkMax r_armMotor = new SparkMax(ArmConstants.ArmRightCanID, MotorType.kBrushless);
-    private SparkClosedLoopController armController = l_armMotor.getClosedLoopController();
+    private SparkClosedLoopController l_armController = l_armMotor.getClosedLoopController();
+    private SparkClosedLoopController r_armController = r_armMotor.getClosedLoopController();
     private RelativeEncoder armEncoder = l_armMotor.getEncoder();
+
 
     //elevator setup
     private SparkFlex l_elevatorMotor = new SparkFlex(ElevatorConstants.LeftElevatorCanID, MotorType.kBrushless);
     private SparkFlex r_elevatorMotor = new SparkFlex(ElevatorConstants.RightElevatorCanID, MotorType.kBrushless);
-    private SparkClosedLoopController elevatorController = l_elevatorMotor.getClosedLoopController(); 
+    private SparkClosedLoopController l_elevatorController = l_elevatorMotor.getClosedLoopController(); 
+    private SparkClosedLoopController r_elevatorController = r_elevatorMotor.getClosedLoopController();
     private RelativeEncoder elevatorEncoder = l_elevatorMotor.getEncoder();
 
     //wrist setup
@@ -95,9 +98,11 @@ public class CoralSubsystem extends SubsystemBase {
     }
 
     private void moveToSetpoint(){
-        armController.setReference(armCurrentTarget, ControlType.kMAXMotionPositionControl);
+        l_armController.setReference(armCurrentTarget, ControlType.kMAXMotionPositionControl);
+        r_armController.setReference(armCurrentTarget, ControlType.kMAXMotionPositionControl);
         wristController.setReference(wristCurrentTarget, ControlType.kMAXMotionPositionControl);
-        elevatorController.setReference(elevatorCurrentTarget, ControlType.kMAXMotionPositionControl);
+        l_elevatorController.setReference(elevatorCurrentTarget, ControlType.kMAXMotionPositionControl);
+        r_elevatorController.setReference(elevatorCurrentTarget, ControlType.kMAXMotionPositionControl);
     }
 
      /** Zero the arm encoder when the user button is pressed on the roboRIO */
