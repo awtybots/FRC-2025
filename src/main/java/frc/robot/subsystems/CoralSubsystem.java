@@ -28,7 +28,9 @@ public class CoralSubsystem extends SubsystemBase {
         L1,
         L2,
         L3,
-        L4;
+        L4,
+        AlgaeLow,
+        AlgaeHigh;
     }
 
     //arm setup
@@ -134,6 +136,16 @@ public class CoralSubsystem extends SubsystemBase {
                         armCurrentTarget = ArmSetpoints.L1;
                         wristCurrentTarget = WristSetpoints.L1;
                         elevatorCurrentTarget = ElevatorSetpoints.L1;
+                        break;
+                    case AlgaeLow:
+                        elevatorCurrentTarget = ElevatorSetpoints.AlgaeLow;
+                        wristCurrentTarget = WristSetpoints.AlgaeLow;
+                        armCurrentTarget = ArmSetpoints.AlgaeLow;
+                        break;
+                    case AlgaeHigh:
+                        elevatorCurrentTarget = ElevatorSetpoints.AlgaeHigh;
+                        wristCurrentTarget = WristSetpoints.AlgaeHigh;
+                        armCurrentTarget = ArmSetpoints.AlgaeHigh;
                         break;
                     case L2:
                         armCurrentTarget = ArmSetpoints.L2;

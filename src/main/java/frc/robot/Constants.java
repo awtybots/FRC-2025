@@ -80,7 +80,9 @@ public final class Constants {
   public static final class ElevatorSetpoints{
     public static final int FeederStation = 0;
     public static final int L1 = 15;
+    public static final int AlgaeLow = 18;
     public static final int L2 = 40;
+    public static final int AlgaeHigh = 43;
     public static final int L3 = 72;
     public static final int L4 = 72;
   }
@@ -88,7 +90,9 @@ public final class Constants {
   public static final class ArmSetpoints{
     public static final double FeederStation = 0;
     public static final double L1 = -3;
+    public static final double AlgaeLow = -3;
     public static final double L2 = -3;
+    public static final double AlgaeHigh = -3;
     public static final double L3 = -3;
     public static final double L4 = -15;
   }
@@ -96,7 +100,9 @@ public final class Constants {
   public static final class WristSetpoints{
     public static final double FeederStation = -1;
     public static final double L1 = 3;
+    public static final double AlgaeLow = 3;
     public static final double L2 = 0;
+    public static final double AlgaeHigh = 3;
     public static final double L3 = 0;
     public static final double L4 = -2;
   }

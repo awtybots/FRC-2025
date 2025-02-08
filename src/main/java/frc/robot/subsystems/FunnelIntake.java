@@ -14,19 +14,25 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Configs;
+import frc.robot.Constants.ArmSetpoints;
+import frc.robot.Constants.ElevatorSetpoints;
 import frc.robot.Constants.FunnelConstants;
 import frc.robot.Constants.FunnelIntakeSetpoints;  
 import frc.robot.Constants.WristSetpoints;
+import frc.robot.subsystems.CoralSubsystem.Setpoint;
 
 public class FunnelIntake extends SubsystemBase {
-
+  public enum Setpoint{
+    FeederStation,
+    Climb;
+}
+ // funnel setup
   private SparkFlex l_funnelMotor = new SparkFlex(FunnelConstants.FunnelLIntake, MotorType.kBrushless);
   private SparkFlex r_funnelMotor = new SparkFlex(FunnelConstants.FunnelRIntake, MotorType.kBrushless);
   private SparkMax funnelWrist = new SparkMax(FunnelConstants.FunnelWrist, MotorType.kBrushless);
   private SparkClosedLoopController funnelWristController = funnelWrist.getClosedLoopController();
   private RelativeEncoder funnelWristEncoder = funnelWrist.getEncoder();
-
-  private double funnelWristCurrentTarget = WristSetpoints.FeederStation;
+  private double funnelWristCurrentTarget;
 
   public FunnelIntake() {
     l_funnelMotor.configure(
@@ -54,8 +60,6 @@ public class FunnelIntake extends SubsystemBase {
   public void setWristPower(double power) {
     funnelWrist.set(power);
   }
-
-
   public void setIntakePower(double leftPower, double rightPower) {
     l_funnelMotor.set(leftPower);
     r_funnelMotor.set(rightPower);

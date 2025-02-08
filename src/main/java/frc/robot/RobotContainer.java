@@ -97,6 +97,14 @@ public class RobotContainer {
     // Y Button -> Elevator/Arm to level 4 position
     m_driverController.y().onTrue(m_coralSubsystem.setSetpointCommand(Setpoint.L4));
 
+    // D-Pad Up -> Elevator to 2st Algae pickup position
+    m_driverController.povUp().onTrue(m_coralSubsystem.setSetpointCommand(Setpoint.AlgaeHigh));
+
+    // D-Pad Down -> Elevator to 1st Algae pickup position
+    m_driverController.povDown().onTrue(m_coralSubsystem.setSetpointCommand(Setpoint.AlgaeLow));
+
+    
+
     // Right Trigger -> Run ball intake, set to leave out when idle
     m_driverController
         .rightTrigger(OIConstants.kTriggerButtonThreshold);
