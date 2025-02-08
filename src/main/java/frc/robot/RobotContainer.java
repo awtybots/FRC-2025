@@ -19,6 +19,7 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.CoralSubsystem;
+import frc.robot.subsystems.FunnelIntake;
 import frc.robot.subsystems.CoralSubsystem.Setpoint;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -37,6 +38,7 @@ public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final CoralSubsystem m_coralSubsystem = new CoralSubsystem();
+  private final FunnelIntake m_funnelIntakeSubsystem = new FunnelIntake();
 
   // The driver's controller
   CommandXboxController m_driverController = new CommandXboxController(OIConstants.kDriverControllerPort);
@@ -73,22 +75,20 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     // Left Bumper -> Run tube intake
-   // m_driverController.leftBumper().whileTrue(m_coralSubsystem.runIntakeCommand());
+    m_driverController.leftBumper().whileTrue(m_coralSubsystem.reverseIntakeCommand());
 
     // Right Bumper -> Run tube intake in reverse
-    //m_driverController.rightBumper().whileTrue(m_coralSubsystem.runIntakeCommand());
+    m_driverController.rightBumper().whileTrue(m_funnelIntakeSubsystem.runIntakeCommand());
+    m_driverController.rightBumper().whileTrue(m_coralSubsystem.runIntakeCommand());
 
     // B Button -> Elevator/Arm to human player position, set ball intake to stow
     // when idle
-    m_driverController
-        .b()
-        .onTrue(
-            m_coralSubsystem
-                .setSetpointCommand(Setpoint.FeederStation));
+    m_driverController.back().onTrue(m_coralSubsystem.setSetpointCommand(Setpoint.FeederStation));
 
-    // A Button -> Elevator/Arm to level 2 position
+    // A Button -> Elevator/Arm to level 1 position
     m_driverController.a().onTrue(m_coralSubsystem.setSetpointCommand(Setpoint.L1));
 
+    // B Button -> Elevator/Arm to level 2 position
     m_driverController.b().onTrue(m_coralSubsystem.setSetpointCommand(Setpoint.L2));
 
     // X Button -> Elevator/Arm to level 3 position

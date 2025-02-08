@@ -31,10 +31,11 @@ public class CoralSubsystem extends SubsystemBase {
         L4;
     }
 
-    /*//arm setup
-    private SparkMax armMotor = new SparkMax(ArmConstants.ArmCanID, MotorType.kBrushless);
-    private SparkClosedLoopController armController = armMotor.getClosedLoopController();
-    private RelativeEncoder armEncoder = armMotor.getEncoder();*/
+    //arm setup
+    private SparkMax l_armMotor = new SparkMax(ArmConstants.ArmLeftCanID, MotorType.kBrushless);
+    private SparkMax r_armMotor = new SparkMax(ArmConstants.ArmRightCanID, MotorType.kBrushless);
+    private SparkClosedLoopController armController = l_armMotor.getClosedLoopController();
+    private RelativeEncoder armEncoder = l_armMotor.getEncoder();
 
     //elevator setup
     private SparkFlex l_elevatorMotor = new SparkFlex(ElevatorConstants.LeftElevatorCanID, MotorType.kBrushless);
@@ -42,18 +43,18 @@ public class CoralSubsystem extends SubsystemBase {
     private SparkClosedLoopController elevatorController = l_elevatorMotor.getClosedLoopController(); 
     private RelativeEncoder elevatorEncoder = l_elevatorMotor.getEncoder();
 
-   /* //wrist setup
+    //wrist setup
     private SparkFlex wristMotor = new SparkFlex(ArmConstants.WristCanID, MotorType.kBrushless);
     private SparkClosedLoopController wristController = wristMotor.getClosedLoopController();
     private RelativeEncoder wristEncoder = wristMotor.getEncoder();
 
     //intake setup
-    private SparkFlex intakeMotor = new SparkFlex(ArmConstants.IntakeCanID, MotorType.kBrushless);*/
+    private SparkFlex intakeMotor = new SparkFlex(ArmConstants.IntakeCanID, MotorType.kBrushless);
 
     
     private boolean wasReset = false;
-    /*private double armCurrentTarget = ArmSetpoints.FeederStation;
-    private double wristCurrentTarget = WristSetpoints.FeederStation;*/
+    private double armCurrentTarget = ArmSetpoints.FeederStation;
+    private double wristCurrentTarget = WristSetpoints.FeederStation;
     private double elevatorCurrentTarget = ElevatorSetpoints.FeederStation;
 
     public CoralSubsystem(){
@@ -68,8 +69,13 @@ public class CoralSubsystem extends SubsystemBase {
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
 
-       /*  armMotor.configure(
-            Configs.CoralSubsystem.armMotorConfig,
+        r_armMotor.configure(
+            Configs.CoralSubsystem.r_armMotorConfig,
+            ResetMode.kResetSafeParameters,
+            PersistMode.kPersistParameters);
+
+        l_armMotor.configure(
+            Configs.CoralSubsystem.l_armMotorConfig,
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
 
@@ -83,14 +89,14 @@ public class CoralSubsystem extends SubsystemBase {
             ResetMode.kResetSafeParameters,
             PersistMode.kPersistParameters);
         
-        armEncoder.setPosition(0);*/
+        armEncoder.setPosition(0);
         elevatorEncoder.setPosition(0);
-       // wristEncoder.setPosition(0);
+        wristEncoder.setPosition(0);
     }
 
     private void moveToSetpoint(){
-       // armController.setReference(armCurrentTarget, ControlType.kMAXMotionPositionControl);
-       // wristController.setReference(wristCurrentTarget, ControlType.kMAXMotionPositionControl);
+        armController.setReference(armCurrentTarget, ControlType.kMAXMotionPositionControl);
+        wristController.setReference(wristCurrentTarget, ControlType.kMAXMotionPositionControl);
         elevatorController.setReference(elevatorCurrentTarget, ControlType.kMAXMotionPositionControl);
     }
 
@@ -106,44 +112,44 @@ public class CoralSubsystem extends SubsystemBase {
         }
     }
 
-    /*private void setIntakePower(double power){
+    private void setIntakePower(double power){
         intakeMotor.set(power);
-    }*/
+    }
 
     public Command setSetpointCommand(Setpoint setpoint){
         return this.runOnce(
             () -> {
                 switch(setpoint){
                     case FeederStation:
-                        //armCurrentTarget = ArmSetpoints.FeederStation;
-                        //wristCurrentTarget = WristSetpoints.FeederStation;
+                        armCurrentTarget = ArmSetpoints.FeederStation;
+                        wristCurrentTarget = WristSetpoints.FeederStation;
                         elevatorCurrentTarget = ElevatorSetpoints.FeederStation;
                         break;
                     case L1:
-                       // armCurrentTarget = ArmSetpoints.L1;
-                        //wristCurrentTarget = WristSetpoints.L1;
+                        armCurrentTarget = ArmSetpoints.L1;
+                        wristCurrentTarget = WristSetpoints.L1;
                         elevatorCurrentTarget = ElevatorSetpoints.L1;
                         break;
                     case L2:
-                        //armCurrentTarget = ArmSetpoints.L2;
-                        //wristCurrentTarget = WristSetpoints.L2;
+                        armCurrentTarget = ArmSetpoints.L2;
+                        wristCurrentTarget = WristSetpoints.L2;
                         elevatorCurrentTarget = ElevatorSetpoints.L2;
                         break;
                     case L3:
-                        //armCurrentTarget = ArmSetpoints.L3;
-                        //wristCurrentTarget = WristSetpoints.L3;
+                        armCurrentTarget = ArmSetpoints.L3;
+                        wristCurrentTarget = WristSetpoints.L3;
                         elevatorCurrentTarget = ElevatorSetpoints.L3;
                         break;
                     case L4:
-                        //armCurrentTarget = ArmSetpoints.L4;
-                        //wristCurrentTarget = WristSetpoints.L4;
+                        armCurrentTarget = ArmSetpoints.L4;
+                        wristCurrentTarget = WristSetpoints.L4;
                         elevatorCurrentTarget = ElevatorSetpoints.L4;
                         break;
                 }
             });
     }
 
-    /*public Command runIntakeCommand(){
+    public Command runIntakeCommand(){
         return this.startEnd(
             () -> this.setIntakePower(IntakeSetpoints.kForward), () -> this.setIntakePower(0.0));
     }
@@ -151,20 +157,17 @@ public class CoralSubsystem extends SubsystemBase {
     public Command reverseIntakeCommand() {
         return this.startEnd(
             () -> this.setIntakePower(IntakeSetpoints.kReverse), () -> this.setIntakePower(0.0));
-    }*/
+    }
 
    public void periodic() {
     moveToSetpoint();
     zeroOnUserButton();
 
     // Display subsystem values
+    
     //SmartDashboard.putNumber("Coral/Arm/Target Position", armCurrentTarget);
     //SmartDashboard.putNumber("Coral/Arm/Actual Position", armEncoder.getPosition());
     SmartDashboard.putNumber("Coral/Elevator/Target Position", elevatorCurrentTarget);
-    System.out.print("Coral/Elevator/Target Position");
-    System.out.println(elevatorCurrentTarget);
-    System.out.print("Coral/Elevator/Actual Position");
-    System.out.println(elevatorEncoder.getPosition());
     SmartDashboard.putNumber("Coral/Elevator/Actual Position", elevatorEncoder.getPosition());
    // SmartDashboard.putNumber("Coral/Intake/Applied Output", intakeMotor.getAppliedOutput());
    }

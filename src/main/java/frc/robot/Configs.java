@@ -62,21 +62,35 @@ public final class Configs {
     public static final class CoralSubsystem {
         public static final SparkFlexConfig l_elevatorMotorConfig = new SparkFlexConfig();
         public static final SparkFlexConfig r_elevatorMotorConfig = new SparkFlexConfig(); 
-        public static final SparkMaxConfig armMotorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig r_armMotorConfig = new SparkMaxConfig();
+        public static final SparkMaxConfig l_armMotorConfig = new SparkMaxConfig();
         public static final SparkFlexConfig wristMotorConfig = new SparkFlexConfig();
         public static final SparkFlexConfig intakeMotorConfig = new SparkFlexConfig();
 
         static{
 
-                armMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
-                armMotorConfig.closedLoop.
+                r_armMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+                l_armMotorConfig.idleMode(IdleMode.kBrake).smartCurrentLimit(40).voltageCompensation(12);
+
+
+                r_armMotorConfig.closedLoop.
                 feedbackSensor(FeedbackSensor.kPrimaryEncoder)
                 .p(0.1)
                 .outputRange(-1, 1)
                 .maxMotion
                 .maxVelocity(2000)
                 .maxAcceleration(10000)
-                .allowedClosedLoopError(.25);  
+                .allowedClosedLoopError(.25); 
+
+                l_armMotorConfig.closedLoop.
+                feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .p(0.1)
+                .outputRange(-1, 1)
+                .maxMotion
+                .maxVelocity(2000)
+                .maxAcceleration(10000)
+                .allowedClosedLoopError(.25); 
+
                 
                 l_elevatorMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);
                 r_elevatorMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(50).voltageCompensation(12);  
@@ -116,6 +130,29 @@ public final class Configs {
                 .allowedClosedLoopError(.25);
 
                 intakeMotorConfig.inverted(true).idleMode(IdleMode.kBrake).smartCurrentLimit(40);
+
+        }
+    };
+
+    public static final class FunnelIntakeSubsystem {
+        public static final SparkFlexConfig l_funnelMotorConfig = new SparkFlexConfig();
+        public static final SparkFlexConfig r_funnelMotorConfig = new SparkFlexConfig(); 
+        public static final SparkMaxConfig funnelWristMotorConfig = new SparkMaxConfig();
+
+        static{
+
+                funnelWristMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(40).voltageCompensation(12);
+                funnelWristMotorConfig.closedLoop.
+                feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+                .p(0.1)
+                .outputRange(-1, 1)
+                .maxMotion
+                .maxVelocity(2000)
+                .maxAcceleration(10000)
+                .allowedClosedLoopError(.25);  
+                
+                l_funnelMotorConfig.idleMode(IdleMode.kCoast).smartCurrentLimit(50);
+                r_funnelMotorConfig.inverted(true).idleMode(IdleMode.kCoast).smartCurrentLimit(50);
 
         }
     };

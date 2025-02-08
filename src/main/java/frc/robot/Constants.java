@@ -65,38 +65,56 @@ public final class Constants {
   }
 
   public static final class ArmConstants{
-    public static final int ArmCanID = 9;
-    public static final int WristCanID = 12;
-    public static final int IntakeCanID = 13;
+    public static final int ArmLeftCanID = 12;
+    public static final int ArmRightCanID = 13;
+    public static final int WristCanID = 17;
+    public static final int IntakeCanID = 18;
+  }
+
+  public static final class FunnelConstants{
+    public static final int FunnelWrist = 9;
+    public static final int FunnelLIntake = 15;
+    public static final int FunnelRIntake = 16;
   }
 
   public static final class ElevatorSetpoints{
     public static final int FeederStation = 0;
-    public static final int L1 = 0;
-    public static final int L2 = 10;
-    public static final int L3 = 20;
-    public static final int L4 = 150;
+    public static final int L1 = 15;
+    public static final int L2 = 40;
+    public static final int L3 = 72;
+    public static final int L4 = 72;
   }
 
   public static final class ArmSetpoints{
-    public static final double FeederStation = 33;
-    public static final double L1 = 0;
-    public static final double L2 = 15;
-    public static final double L3 = 15;
-    public static final double L4 = 33;
+    public static final double FeederStation = 0;
+    public static final double L1 = -3;
+    public static final double L2 = -3;
+    public static final double L3 = -3;
+    public static final double L4 = -15;
   }
 
   public static final class WristSetpoints{
+    public static final double FeederStation = -1;
+    public static final double L1 = 3;
+    public static final double L2 = 0;
+    public static final double L3 = 0;
+    public static final double L4 = -2;
+  }
+
+  public static final class FunnelWristSetpoints{
     public static final double FeederStation = 0;
-    public static final double L1 = 0;
-    public static final double L2 = 40;
-    public static final double L3 = 40;
-    public static final double L4 = 40;
+    public static final double Climb = 20;
+  }
+
+  public static final class FunnelIntakeSetpoints{
+    public static final double kForward = 0.5;
+    public static final double kReverse = 0.65;
+    public static final double kHold = 0.0;
   }
 
   public static final class IntakeSetpoints{
-    public static final double kForward = 0.5;
-    public static final double kReverse = -0.5;
+    public static final double kForward = -1;
+    public static final double kReverse = 1;
     public static final double kHold = .25;
   }
 
